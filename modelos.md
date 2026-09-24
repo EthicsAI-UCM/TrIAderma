@@ -14,7 +14,7 @@ Respecto a los otros dos casos:
 
 1. Por un lado tenemos el caso de añadir gravedad o algun output numérico que nos permita clasificar internamente por gravedad del caso. Con dos preguntas de gemini y la documentación de ultralytics (referncia 3), vemos que también podemos darle parametros de output extra a un segmento de salida.
 
-2. Para el caso del historial, el output de yolo en verdad puedes devolverlo con formatos de tabla tratables, por tanto en vez de solo usar este modelo de reconocimiento podemos hacer un pipeline de modelos e el cual YOLO hacia el diagnóstico actual y otro modelo evalua la "pendiente de evolución" del caso en función del tipo de enfermedad y los parametros de gravedad dados (No es lo mismo que una irritación crezca 2 cm a que un tumor crezca 2 mm [ste último obvio es peor pese a que el evaluador de gravedad es inferior])
+2. Para el caso del historial, el output de yolo en verdad puedes devolverlo con formatos de tabla tratables, por tanto en vez de solo usar este modelo de reconocimiento podemos hacer un pipeline de modelos e el cual YOLO hacia el diagnóstico actual y otro modelo evalua la "pendiente de evolución" del caso en función del tipo de enfermedad y los parametros de gravedad dados (No es lo mismo que una irritación crezca 2 cm a que un tumor crezca 2 mm [este último obvio es peor pese a que el evaluador de gravedad es inferior])
 
 **referencias usadas en este apartado:**
 
