@@ -9,3 +9,6 @@ posteriormente derivar al paciente de ser necesario por su zona de salud o al eq
 Como punto diferenciador de TrIAderma es que además de hacer prácticamente lo mismo que Legit.Health, se proporcionará alertas automáticas al
 usuario cuando un algoritmo considere que deba subir nuevas fotos de la lesión, garantizando un seguimiento más autónomo y si el
 tratamiento está actuando como debe o por el contrario detectar patrones inusuales y por ejemplo derivar al paciente a una consulta médica.
+
+[Conversación Gemini](https://docs.google.com/document/d/123R6CFOdQq-lBdohllA7A_3liPD838LQ4hww_hQqtvI/edit?usp=sharing)
+[Legit.Health](https://legit.health/es/docs/how-to-use-the-app/workflows/triage-and-follow-up-by-auxiliary-staff?persistLocale=true)
