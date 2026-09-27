@@ -1,5 +1,5 @@
 # Actores y rol del grupo
-_ La puesta en marcha de un sistema de triaje online autónomo involucra a varios actores, desde su desarrollo inicial hasta su aplicación en el mundo real. A continuación pasaremos a definir cuatro de los que hemos considerado más importantes y el rol que adoptará TrIAderma durante el desarrollo del proyecto._
+_La puesta en marcha de un sistema de triaje online autónomo involucra a varios actores, desde su desarrollo inicial hasta su aplicación en el mundo real. A continuación pasaremos a definir cuatro de los que hemos considerado más importantes y el rol que adoptará TrIAderma durante el desarrollo del proyecto._
 
 ## Definición de actores
 *Proveedor tecnológico:* motivado por el beneficio económico, la empresa busca promover su producto al mayor número de servicios de salud y clínicas privadas interesadas. En la búsqueda por acelerar la adopción del sistema y de proteger su propiedad intelectual (modelos propietarios), puede encuentrar conflictos con la exigencia de transparencia y trazabilidad de los algoritmos por parte de la UE [1].
