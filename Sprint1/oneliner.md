@@ -1,6 +1,6 @@
 # Propuesta One-liner
 
-## _Ofrecer un seguimiento médico con IA que facilite la clasificación de gravedad y triaje de los pacientes con enfermedades dermatológicas_
+## _"Facilitar el triaje de los pacientes de dermatología con clasificaciones de gravedad y seguimientos potenciados con IA"_
 
 Básicamente el objetivo del proyecto es ese, con una IA que haga un seguimiento y no solo una evaluación en el momento poder evaluar que enfermedades pueden derivar en problemas mayores. Un ejemplo claro son los melanomas, que al final es un cáncer.
 
