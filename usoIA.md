@@ -1,10 +1,10 @@
 # Uso de la IA
 
 ## Datos de entrada
-Nuestra propuesta consiste en un modelo capaz de monitorizar el desarrollo de enfermedades dermatológicas de los pacientes mediante fotografías junto a datos recopilados en las analíticas más recientes y antecedentes relevantes. De esta manera el personal médico podrá tener un historial claro de la evolución de estas enfermedades, y de esta manera poder diagnosticar con mayor certeza la gravedad de la condición de los pacientes.
+Nuestra propuesta consiste en un modelo capaz de monitorizar el desarrollo de enfermedades dermatológicas de los pacientes mediante fotografías junto a datos recopilados en las analíticas más recientes y antecedentes relevantes.
 
 ## ¿Quién lo usará?
-Esta herramienta la utilizarán únicamente las personas especializadas en el ámbito de la salud que estén al cargo del seguimiento médico de los pacientes, en ningún caso lo usarán dichos pacientes directamente.
+Esta herramienta la usarán los usuarios de manera online. Si no fuese muy grave, podría aconsejar una telecita con un profesional, y en caso de ser severa, una cita presencial.
 
 ## Salida del modelo
 Una vez porcesados los datos, la IA podría devolver un PDF con outputs como:
