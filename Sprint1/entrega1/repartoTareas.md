@@ -1,4 +1,4 @@
-# reparto de tareas
+# Reparto de tareas
 
 En este sprint, como se puede ver en _github projects_, hemos usado los puntos del propio entregable como tareas. Estas tareas tenian un peso en función de la dificultad de investigación que requiriese. En el reparto se intentó que inicialmente fuese lo más equitativo posible, de tal manera que nadie hiciera varias tareas pesadas.
 
