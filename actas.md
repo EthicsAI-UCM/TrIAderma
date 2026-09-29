@@ -117,4 +117,45 @@ A: y xq NO? Sistemas de defensa
 #### ¿A favor de aceleracionismo? 3 o 4. El resto frena.
 
 ## Clase -> implicaciones sociales (impacto laboral)
+**MIT**: *La IA podría how reemplazar al 10% de la mano de obra de EEUU*
+
+**FMI**: *Un 40% de puestos de trabajo van a estar afectados por IA*
+
+Un buen montón de sectores (informatica, finanzas, ventas, recursos humanos, marketing, temas legales) tiene impacto la IA
+Paradoja de Jevons -> Aumenta produtividad si demanda es suficientemente flexible
+Cuesta bastante adaptarse a gente que lleva toda una vida dedicada al mismo oficio.
+
+Cuanto puede aguantar una socidad en soportar un impacto fuerte:
+    - 10% trabajo reemplazado -> +10% paro
+    - 1/3 parados es una barbaridad.
+    - Depende del sistema de jubilación (digamos España)
+    - Es complejo, ya que la IA se suele aplicar a trabajos que requiran intelecto sobre todo
+    - Eventualmente habrá que aumentar presión fiscal (no favoreciendo a la empresas)
+    - En el crack bestia de EEUU se llegó a 28%
+    - Que sea el estado el que regule (tasas para limitar automatización, ...)
+        - **Bill Gates**: Hay que tasar los tokens de IAs que estén reemplazando a empleados
+    - ¿Y sí acortamos jornada laboral? -> el empresario dice que de donde saca el beneficio
+    - Dependiendo del tamaño de la empresa el impacto varía, tmb depende del sector
+    - ¿Al final habrá un equilibrio?
+    - Hay empresas que forman (o pagan la formación) de los empleados
+
+### Huelga guionistas hollywood
+Temor a ser reemplazados por IA -> firmado acuerdo para no poder ser reemplazados
+
+### Huelga actores de videojuegos
+Lo mismo -> se llegó a lo mismo
+
+### Trabajadores portuarios
+de momento, no hay una victoria clara
+
+Con los informáticos cada vez son mas sustituibles, o almenos el enfoque va a cambiar
+Nuestro nivel es más dificil de replicar que la creatividad??
+    - Realmente, a la IA le cuesta más la parte creativa que la parte técnica
+    - Empresas aplicando IA para poder acelerar procesos manuales.
+    - De momento sale caro reemplazar a gente (aunque se está volviendo mas barato). Renta más complementar
+    - La calidad de los resultados no es la misma que la una persona (cantidad vs calidad)
+- Usar la IA nos hace programar peor? Puede ser. Los seniors no tenían IA.
+- La gente hoy en día que no usa la IA para programar lo hace por que quieren.
+- Vamos a ver código, pero capaz no tocarlo.
+
 
