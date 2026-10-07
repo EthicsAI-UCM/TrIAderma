@@ -55,7 +55,7 @@ El paciente podría enviar imágenes que no fueran de su piel, como kiwis. Ante 
 correspondieran al tema tratado, el modelo podría devolver salidas inesperadas y desorbitadas.
 
 ### Solución
-
+Enviar fotos desde distintos ángulos que permitan verificar el elemento que se está fotografiando.
 
 ## 6. Ignorar el seguimiento
 ### Problema
@@ -69,3 +69,31 @@ El modelo podría detectar la falta de actividad, y en caso de superar un umbral
 alertar al especialista al cargo y dejarle saber que su paciente no está cooperando. De esta manera,
 el especialista tomaría las medidas que considerase necesarias. También podríamos mandar al búho de
 Duolingo a casa del paciente para que le diese una lección...
+
+## 7. Enviar fotos de otras patologías en el seguimiento
+### Problema
+Si en el seguimiento el paciente envía foto de otra patologías, se pueden alterar los resultados gravemente.
+
+### Solución:
+El modelo es capaz de diferenciar entre patologías, si añadimos que en el seguimiento también se evalua si ha habido un cambio,en caso positivo avisar al paciente que no es la misma enfermedad, y si no lo ha hecho a posta ofrecer pedir otra cita.
+
+## 8. Falsificar síntomas
+### Problema
+El usuario el redactar los síntomas puede falsificarlos para agravar el problema.
+
+### Solución
+Si la gravedad de la imagen no cuadra con los síntomas derivar a un análisis médico directamente para evitar problemas con la IA.
+
+## 9. Caída de servidores
+### Problema
+Si los servidores se caen los usuarios no podrán ver sus recetas ni pedir citas.
+
+### Solución
+Permitir un backup de las recetas en el móvil para que el usuario las pueda seguir viendo, además el recordatorio puede ser simplemente local. Respecto a las citas se avisará al usuario de que la IA no va y que vaya presencialmente al médico más cercano si es muy urgente.
+
+## 10. No hay permisos de camara
+### Problema
+Nuestro modelo no sirve si los usuarios no dan permisos de cámara, lo cual es normal que no se fíen y no lo den
+
+### Solución
+Se podría ofrecer que redacten solo los síntomas pero obligarle a ir al médico de cabecera, básicamente pedir cita de forma corriente, ya que no podemos asegurar nada.
