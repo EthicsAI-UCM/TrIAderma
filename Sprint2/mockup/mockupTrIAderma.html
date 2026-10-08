@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrIAderma - App Móvil Liquid Glass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box; margin: 0; padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #030712; color: #f3f4f6;
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; padding: 20px;
+    }
+
+    /* Contenedor del teléfono */
+    .phone-mockup {
+      width: 100%; max-width: 393px; height: 852px;
+      background: radial-gradient(circle at 80% 20%, #2e1065 0%, #090d16 50%),
+                  radial-gradient(circle at 10% 80%, #042f2e 0%, #090d16 60%);
+      border-radius: 48px; border: 8px solid #1f2937;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 40px rgba(13, 148, 136, 0.15);
+      position: relative; overflow: hidden; display: flex; flex-direction: column;
+    }
+
+    /* Resplandores Glassmorphism */
+    .glow-orb-1 {
+      position: absolute; width: 250px; height: 250px; background: #7c3aed;
+      filter: blur(90px); opacity: 0.35; top: -50px; right: -50px; pointer-events: none;
+    }
+    .glow-orb-2 {
+      position: absolute; width: 280px; height: 280px; background: #0d9488;
+      filter: blur(100px); opacity: 0.3; bottom: 50px; left: -60px; pointer-events: none;
+    }
+
+    /* Barra de estado */
+    .status-bar {
+      display: flex; justify-content: space-between; padding: 14px 28px 8px;
+      font-size: 14px; font-weight: 600; z-index: 10; color: #fff;
+    }
+    .status-icons svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; margin-left: 4px; }
+
+    /* Pantallas */
+    .screen {
+      display: none; flex: 1; overflow-y: auto; padding: 10px 20px 100px;
+      z-index: 5; scrollbar-width: none; flex-direction: column;
+    }
+    .screen.active { display: flex; }
+    .screen::-webkit-scrollbar { display: none; }
+    .hidden { display: none !important; }
+
+    /* Tarjetas de Cristal */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; padding: 18px; margin-bottom: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Inputs de Cristal */
+    .glass-input, .glass-select, .glass-textarea {
+      width: 100%; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px; padding: 12px 14px; color: #fff; font-size: 13px; margin-bottom: 12px;
+      outline: none; backdrop-filter: blur(10px); resize: none; transition: border-color 0.3s;
+    }
+    .glass-select option { background: #0f172a; color: #fff; }
+    .glass-input:focus, .glass-select:focus, .glass-textarea:focus { border-color: rgba(45, 212, 191, 0.8); }
+    .glass-input::placeholder, .glass-textarea::placeholder { color: #6b7280; }
+
+    .glass-btn {
+      width: 100%; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;
+      padding: 14px; border-radius: 18px; font-size: 14px; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-bottom: 10px; transition: all 0.3s ease; text-decoration: none;
+    }
+    .glass-btn:active { transform: scale(0.98); }
+    .glass-btn.selected { border-color: #2dd4bf; background: rgba(45, 212, 191, 0.18); }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(20, 184, 166, 0.6), rgba(6, 182, 212, 0.6));
+      border-color: rgba(255, 255, 255, 0.4); box-shadow: 0 8px 20px rgba(13, 148, 136, 0.3);
+    }
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.25); border-color: rgba(239, 68, 68, 0.4); color: #f87171;
+    }
+
+    /* Tipografía y Utilitarios */
+    .title-main { font-size: 26px; font-weight: 800; margin-bottom: 6px; text-align: center; }
+    .subtitle { font-size: 13px; color: #9ca3af; text-align: center; margin-bottom: 24px; }
+    .section-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: #e5e7eb; display: flex; align-items: center; gap: 8px; }
+    
+    .svg-icon { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-glow { filter: drop-shadow(0 0 6px currentColor); }
+
+    /* Cabecera */
+    .app-header {
+      background: rgba(255, 255, 255, 0.07); backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 22px;
+      padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;
+    }
+    .header-user-info { display: flex; align-items: center; gap: 10px; }
+    .header-avatar { width: 32px; height: 32px; border-radius: 50%; background: rgba(20, 184, 166, 0.3); border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+    
+    .logout-icon-btn {
+      background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171; width: 34px; height: 34px; border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
+    }
+    .logout-icon-btn:hover { background: rgba(239, 68, 68, 0.3); }
+
+    .back-btn {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; width: 34px; height: 34px; border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
+    }
+
+    /* Listas */
+    .list-item {
+      background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px; padding: 12px 14px; margin-bottom: 10px; transition: all 0.2s ease;
+    }
+    .list-item-clickable { cursor: pointer; }
+    .list-item-clickable:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255,255,255,0.2); }
+    
+    .badge { padding: 4px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; display: inline-block; }
+    .badge-urgent { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .badge-normal { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.4); }
+    .badge-info { background: rgba(255, 255, 255, 0.1); color: #e5e7eb; border: 1px solid rgba(255, 255, 255, 0.2); }
+
+    /* Alerta Presencial */
+    .alert-box {
+      background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fcd34d; padding: 12px; border-radius: 16px; font-size: 12px; line-height: 1.4;
+      display: flex; gap: 10px; margin-bottom: 14px;
+    }
+
+    /* Gráfica SVG */
+    .graph-container { width: 100%; height: 45px; margin-top: 8px; }
+    .graph-svg { width: 100%; height: 100%; overflow: visible; }
+    .graph-line { stroke: #2dd4bf; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 4px 6px rgba(45,212,191,0.4)); }
+    .graph-point { fill: #030712; stroke: #2dd4bf; stroke-width: 2; }
+
+    /* Contenedor Vectorial de Lesiones */
+    .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+    .svg-lesion-card {
+      border-radius: 14px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #111827; height: 85px; display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .lesion-tag {
+      position: absolute; bottom: 4px; left: 4px; background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px); padding: 2px 6px; border-radius: 6px; font-size: 9px; font-weight: 700; color: #e5e7eb;
+    }
+
+    /* DOCKS INFERIORES POR PERFIL */
+    .dock-nav {
+      position: absolute; bottom: 18px; left: 16px; right: 16px; height: 64px;
+      background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 32px;
+      display: none; justify-content: space-around; align-items: center; padding: 0 8px; z-index: 20;
+    }
+    .dock-nav.visible { display: flex; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; color: #6b7280; font-size: 10px; font-weight: 600; cursor: pointer; flex: 1; text-align: center; }
+    .nav-item.active { color: #2dd4bf; }
+
+    /* Modal */
+    .modal-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="phone-mockup">
+    <div class="glow-orb-1"></div>
+    <div class="glow-orb-2"></div>
+
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-icons" style="display:flex;">
+        <svg viewBox="0 0 24 24"><path d="M12 18h.01M8 14.2a6 6 0 0 1 8 0M5 10.5a10.5 10.5 0 0 1 14 0"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M16 7h4v10h-4zM4 11h4v6H4zM10 4h4v13h-4z"/></svg>
+      </div>
+    </div>
+
+    <!-- 1. LOGIN PRINCIPAL (CON NUEVO LOGO DERMATOLÓGICO + IA) -->
+    <div id="screen-login" class="screen active" style="justify-content: center;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <!-- Nuevo Isotipo Dermatología + IA en SVG (Dermis cutánea y destello) -->
+        <svg class="icon-glow" style="width: 56px; height: 56px; color: #2dd4bf;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9" stroke-dasharray="2 4"/>
+          <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z" fill="rgba(45,212,191,0.15)"/>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#a855f7"/>
+          <polygon points="12 9 13.5 11.5 16 12 13.5 12.5 12 15 10.5 12.5 8 12 10.5 11.5 12 9" fill="#2dd4bf" stroke="none"/>
+        </svg>
+      </div>
+      <h1 class="title-main">TrIAderma</h1>
+      <p class="subtitle">Soporte Inteligente de Triaje y Seguimiento Dermatológico</p>
+      
+      <button class="glass-btn btn-primary" onclick="showScreen('screen-paciente')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Acceso Paciente
+      </button>
+      <button class="glass-btn" onclick="showScreen('screen-doctor-type')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 7v4"/></svg>
+        Acceso Personal Médico
+      </button>
+    </div>
+
+    <!-- 2. TIPO DE MÉDICO -->
+    <div id="screen-doctor-type" class="screen" style="justify-content: center;">
+      <h2 class="title-main">Perfil Profesional</h2>
+      <p class="subtitle">Selecciona tu rol facultativo.</p>
+      
+      <button class="glass-btn" onclick="showScreen('screen-cabecera')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        Médico de Cabecera (Triaje)
+      </button>
+      <button class="glass-btn" onclick="showScreen('screen-dermatologo')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg>
+        Dermatólogo Especialista
+      </button>
+      <button class="glass-btn" style="background: transparent; border:none; margin-top: 15px; font-size: 13px;" onclick="goBack()">
+        Volver
+      </button>
+    </div>
+
+    <!-- 3. DASHBOARD PACIENTE -->
+    <div id="screen-paciente" class="screen">
+      <div class="app-header">
+        <div class="header-user-info">
+          <div class="header-avatar">LM</div>
+          <div>
+            <div style="font-weight: 800; font-size: 14px;">Lucía M.</div>
+            <div style="font-size: 10px; color: #2dd4bf;">Paciente Activo</div>
+          </div>
+        </div>
+        <button class="logout-icon-btn" onclick="resetAndLogout()" title="Cerrar Sesión">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+
+      <button class="glass-btn btn-primary" style="padding: 16px; margin-bottom: 16px;" onclick="showScreen('screen-pedir-cita')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Pedir Nueva Cita
+      </button>
+
+      <div class="section-title">
+        <svg class="svg-icon icon-glow" style="color:#a855f7" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Tus Casos Activos (2)
+      </div>
+
+      <div class="list-item list-item-clickable" onclick="openPatientCaseDetail('Dermatitis Atópica en Antebrazo', '#TD-2048', '+85% de avance positivo', 'Corticoides Tópicos cada 12h durante 7 días.')">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span class="badge badge-normal">#TD-2048 · Activo</span>
+          <span style="font-size:10px; color:#9ca3af;">Actualizado hoy</span>
+        </div>
+        <h3 style="font-size:15px; font-weight:800;">Dermatitis Atópica (Antebrazo)</h3>
+        <p style="font-size:11px; color:#9ca3af; margin-top:2px;">Progreso IA: <strong style="color:#2dd4bf;">+85% de avance positivo</strong></p>
+        
+        <div class="photo-grid">
+          <div class="svg-lesion-card">
+            <svg width="100%" height="100%" viewBox="0 0 120 70">
+              <rect width="120" height="70" fill="#dfb190"/>
+              <ellipse cx="60" cy="35" rx="25" ry="15" fill="#c25959" opacity="0.75" filter="blur(2px)"/>
+            </svg>
+            <span class="lesion-tag">23 SEP (INICIO)</span>
+          </div>
+          <div class="svg-lesion-card">
+            <svg width="100%" height="100%" viewBox="0 0 120 70">
+              <rect width="120" height="70" fill="#dfb190"/>
+              <ellipse cx="60" cy="35" rx="10" ry="6" fill="#c25959" opacity="0.3"/>
+            </svg>
+            <span class="lesion-tag">07 OCT (HOY)</span>
+          </div>
+        </div>
+        <div style="font-size:11px; color:#2dd4bf; font-weight:600; text-align:right;">Ver mi tratamiento y fotos ↗</div>
+      </div>
+
+      <div class="list-item list-item-clickable" onclick="openPatientCaseDetail('Lesión Pigmentada en Espalda', '#TD-3109', 'Pendiente de revisión presencial', 'Observación preventiva sin medicación')">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span class="badge badge-info">#TD-3109 · En Evaluación</span>
+          <span style="font-size:10px; color:#9ca3af;">Hace 3 días</span>
+        </div>
+        <h3 style="font-size:15px; font-weight:800;">Lesión Pigmentada (Espalda)</h3>
+        <p style="font-size:11px; color:#9ca3af; margin-top:2px;">Analizado por IA: Pendiente de revisión presencial</p>
+        <div style="font-size:11px; color:#2dd4bf; font-weight:600; text-align:right; margin-top:6px;">Ver estado ↗</div>
+      </div>
+
+      <button class="glass-btn" style="margin-top:10px;" onclick="showScreen('screen-modificar-citas')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Gestionar / Modificar Citas Pendientes
+      </button>
+    </div>
+
+    <!-- 4. DETALLE PACIENTE -->
+    <div id="screen-paciente-caso-detalle" class="screen">
+      <div class="app-header">
+        <button class="back-btn" onclick="goBack()">
+          <svg class="svg-icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <div style="font-weight: 800; font-size:15px;">Mi Seguimiento</div>
+        <div style="width:24px;"></div>
+      </div>
+
+      <div class="glass-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span id="pat-case-id" class="badge badge-normal">#TD-2048</span>
+          <span style="font-size:11px; color:#2dd4bf; font-weight:700;">● Tratamiento en curso</span>
+        </div>
+        <h2 id="pat-case-title" style="font-size:18px; font-weight:800; margin-top:8px;">Dermatitis Atópica en Antebrazo</h2>
+        <p id="pat-case-status" style="font-size:12px; color:#9ca3af; margin-top:2px;">Evaluación de IA: +85% de avance positivo</p>
+
+        <div style="margin:16px 0; padding:12px; background:rgba(20, 184, 166, 0.12); border-radius:16px; border:1px solid rgba(20, 184, 166, 0.3);">
+          <div style="font-size:11px; color:#2dd4bf; font-weight:700;">💊 Tratamiento Prescrito por tu Médico</div>
+          <div id="pat-case-receta" style="font-size:13px; color:#fff; font-weight:600; margin-top:4px;">Corticoides Tópicos cada 12h durante 7 días.</div>
+          <button class="glass-btn" style="margin-top:10px; margin-bottom:0; font-size:12px; padding:8px;" onclick="alert('Descargando receta en formato PDF...')">
+            📥 Descargar Receta Médica (PDF)
+          </button>
+        </div>
+
+        <div class="section-title">Evolución de Fotografía Cutánea</div>
+        <div class="photo-grid">
+          <div class="svg-lesion-card">
+            <svg width="100%" height="100%" viewBox="0 0 120 70">
+              <rect width="120" height="70" fill="#dfb190"/>
+              <ellipse cx="60" cy="35" rx="25" ry="15" fill="#c25959" opacity="0.75" filter="blur(2px)"/>
+            </svg>
+            <span class="lesion-tag">INICIO</span>
+          </div>
+          <div class="svg-lesion-card">
+            <svg width="100%" height="100%" viewBox="0 0 120 70">
+              <rect width="120" height="70" fill="#dfb190"/>
+              <ellipse cx="60" cy="35" rx="10" ry="6" fill="#c25959" opacity="0.3"/>
+            </svg>
+            <span class="lesion-tag">HOY</span>
+          </div>
+        </div>
+
+        <button class="glass-btn btn-primary" style="margin-top:14px;" onclick="alert('Abriendo cámara para captura de lesión...')">
+          📷 Subir Nueva Foto de Seguimiento
+        </button>
+        <button class="glass-btn" onclick="showScreen('screen-pedir-cita')">
+          📅 Pedir Cita de Revisión para este Caso
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. PEDIR CITA (PACIENTE) -->
+    <div id="screen-pedir-cita" class="screen">
+      <div class="app-header">
+        <button class="back-btn" onclick="goBack()">
+          <svg class="svg-icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <div style="font-weight: 800; font-size:15px;">Solicitar Cita</div>
+        <div style="width: 24px;"></div>
+      </div>
+
+      <div class="glass-card">
+        <div class="section-title">1. Tipo de Consulta</div>
+        <div style="display:flex; gap:10px; margin-bottom: 16px;">
+          <button id="btn-tipo-activo" class="glass-btn selected" style="margin-bottom:0; font-size:12px;" onclick="selectCitaOption('activo')">Caso Activo</button>
+          <button id="btn-tipo-nuevo" class="glass-btn" style="margin-bottom:0; font-size:12px;" onclick="selectCitaOption('nuevo')">Caso Nuevo</button>
+        </div>
+
+        <div id="section-caso-activo">
+          <div class="section-title">Selecciona el tratamiento activo:</div>
+          <select class="glass-select" id="select-active-case">
+            <option value="2048">#TD-2048: Dermatitis Atópica (Antebrazo)</option>
+            <option value="3109">#TD-3109: Lesión Pigmentada (Espalda)</option>
+          </select>
+        </div>
+
+        <div id="section-caso-nuevo" class="hidden">
+          <div class="section-title">2. Descripción de Síntomas</div>
+          <textarea class="glass-input" rows="3" placeholder="Describe qué notas, desde cuándo, si pica o duele..."></textarea>
+          
+          <div class="section-title">3. Fotografía de la Lesión</div>
+          <button class="glass-btn btn-primary" onclick="alert('Cámara activada para captura de piel...')">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Adjuntar Foto para IA
+          </button>
+
+          <button class="glass-btn" style="background:transparent; border:1px dashed rgba(255,255,255,0.3); font-size:12px;" onclick="document.getElementById('alerta-presencial').classList.remove('hidden')">
+            Omitir subida de fotografía
+          </button>
+
+          <div id="alerta-presencial" class="alert-box hidden">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="min-width: 18px; color:#fcd34d;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <div>
+              <strong>Aviso de Triaje Presencial:</strong><br>
+              Al no proporcionar imágenes, la IA no puede evaluar la gravedad. La cita será asignada <strong>de forma presencial con tu Médico de Cabecera</strong>.
+            </div>
+          </div>
+        </div>
+
+        <button class="glass-btn btn-primary" style="margin-top:16px;" onclick="alert('¡Solicitud registrada correctamente!'); goBack()">
+          Confirmar Solicitud de Cita
+        </button>
+      </div>
+    </div>
+
+    <!-- 6. MODIFICAR CITAS -->
+    <div id="screen-modificar-citas" class="screen">
+      <div class="app-header">
+        <button class="back-btn" onclick="goBack()">
+          <svg class="svg-icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <div style="font-weight: 800; font-size:15px;">Gestión de Citas</div>
+        <div style="width:24px;"></div>
+      </div>
+
+      <div class="section-title">Tus Citas Programadas</div>
+
+      <div id="cita-card-1" class="glass-card">
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+          <span class="badge badge-normal">Presencial · Cabecera</span>
+          <span style="font-size:11px; color:#2dd4bf; font-weight:700;">Confirmada</span>
+        </div>
+        <h4 style="font-size:15px; font-weight:800;">Dr. Gómez (Centro de Salud)</h4>
+        <p style="font-size:12px; color:#9ca3af; margin: 4px 0 12px;">Fecha: <strong>12 de Octubre, 2026 - 09:30 AM</strong></p>
+        
+        <div style="display:flex; gap:8px;">
+          <button class="glass-btn" style="font-size:12px; padding:10px; margin-bottom:0;" onclick="openReagendarModal()">Cambiar Fecha</button>
+          <button class="glass-btn btn-danger" style="font-size:12px; padding:10px; margin-bottom:0;" onclick="cancelarCita('cita-card-1')">Cancelar</button>
+        </div>
+      </div>
+
+      <div id="cita-card-2" class="glass-card">
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+          <span class="badge badge-info">Telecita · Dermatología</span>
+          <span style="font-size:11px; color:#f59e0b; font-weight:700;">Pendiente de Derivación</span>
+        </div>
+        <h4 style="font-size:15px; font-weight:800;">Dra. Sánchez (Hospital)</h4>
+        <p style="font-size:12px; color:#9ca3af; margin: 4px 0 12px;">Estado: <strong>Pendiente de validación por tu médico de cabecera.</strong></p>
+        
+        <div style="display:flex; gap:8px;">
+          <button class="glass-btn btn-danger" style="font-size:12px; padding:10px; margin-bottom:0; width:100%;" onclick="cancelarCita('cita-card-2')">Cancelar Solicitud</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. DASHBOARD MÉDICO CABECERA -->
+    <div id="screen-cabecera" class="screen">
+      <div class="app-header">
+        <div class="header-user-info">
+          <div class="header-avatar" style="background:rgba(56,189,248,0.3);">DG</div>
+          <div>
+            <div style="font-weight: 800; font-size: 14px;">Dr. Gómez</div>
+            <div style="font-size: 10px; color: #38bdf8;">Médico de Cabecera</div>
+          </div>
+        </div>
+        <button class="logout-icon-btn" onclick="resetAndLogout()" title="Cerrar Sesión">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+
+      <div class="glass-card">
+        <div class="section-title">
+          <svg class="svg-icon icon-glow" style="color:#f59e0b" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Casos Entrantes
+        </div>
+        
+        <div class="list-item list-item-clickable" onclick="openDoctorFile('Carlos V.', '#TD-9901', 'Sospecha Melanoma', 'Gravedad 8.5/10', 'Requiere Biopsia Urgente')">
+          <div style="width:100%;">
+            <div style="display:flex; justify-content:space-between;">
+              <span style="font-weight:800; font-size:14px;">Carlos V. <span class="badge badge-info">Caso Nuevo</span></span>
+              <span class="badge badge-urgent">Prioridad Alta</span>
+            </div>
+            <div style="font-size:11px; color:#9ca3af; margin-top:4px;">IA: Sospecha Melanoma · Gravedad: <strong>8.5/10</strong></div>
+          </div>
+        </div>
+
+        <div class="list-item list-item-clickable" onclick="openDoctorFile('Lucía M.', '#TD-2048', 'Dermatitis Atópica en Antebrazo', '85% Mejora', 'Corticoides Tópicos')">
+          <div style="width:100%;">
+            <div style="display:flex; justify-content:space-between;">
+              <span style="font-weight:800; font-size:14px;">Lucía M. <span class="badge badge-info">Seguimiento</span></span>
+              <span class="badge badge-normal">Telecita</span>
+            </div>
+            <div style="font-size:11px; color:#9ca3af; margin-top:4px;">IA: Dermatitis Atópica · Evolución favorable (+85%)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA PREVIA RESUMIDA DE LA LISTA DE ESPERA (NUEVO REQUERIMIENTO) -->
+      <div class="glass-card" style="margin-bottom:80px;">
+        <div class="section-title" style="justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg class="svg-icon icon-glow" style="color:#10b981" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            Vista Previa Lista de Espera
+          </div>
+          <span style="font-size:11px; color:#2dd4bf; cursor:pointer;" onclick="showScreen('screen-cabecera-lista-espera')">Ver todo ↗</span>
+        </div>
+
+        <!-- Muestra estática limpia como preview -->
+        <div style="background:rgba(255,255,255,0.03); border-radius:14px; padding:10px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:700;">1. Ana R. (Dermatitis)</span>
+          <span class="badge badge-urgent">Turno 1</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.03); border-radius:14px; padding:10px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; font-weight:700;">2. Luis P. (Nevus)</span>
+          <span class="badge badge-normal">Turno 2</span>
+        </div>
+
+        <button class="glass-btn" style="margin-top:12px; margin-bottom:0; font-size:13px;" onclick="showScreen('screen-cabecera-lista-espera')">
+          ⚙️ Ajustar Orden Completo
+        </button>
+      </div>
+    </div>
+
+    <!-- 7.1 PANTALLA INDEPENDIENTE DE LISTA DE ESPERA PARA CABECERA -->
+    <div id="screen-cabecera-lista-espera" class="screen">
+      <div class="app-header">
+        <button class="back-btn" onclick="goBack()">
+          <svg class="svg-icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <div style="font-weight: 800; font-size:15px;">Ajuste Lista de Espera</div>
+        <div style="width:24px;"></div>
+      </div>
+
+      <div class="glass-card">
+        <div class="section-title">Reordenación Facultativa en Vivo</div>
+        <p style="font-size:11px; color:#9ca3af; margin-bottom:14px;">Utiliza las flechas para mover turnos de forma fluida.</p>
+
+        <div id="waitlist-container">
+          <div class="list-item waitlist-item" style="cursor:default; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="waitlist-text" style="font-size:13px; font-weight:700;">1. Ana R. (Dermatitis Severa)</div>
+              <div style="font-size:10px; color:#2dd4bf;">Prioridad IA: Alta</div>
+            </div>
+            <div style="display:flex; gap:4px;">
+              <button class="glass-btn btn-move-up" style="width:auto; padding:6px 10px; margin-bottom:0; font-size:11px;" onclick="moveItemUp(this)">Subir ↑</button>
+              <button class="glass-btn btn-move-down" style="width:auto; padding:6px 10px; margin-bottom:0; font-size:11px;" onclick="moveItemDown(this)">Bajar ↓</button>
+            </div>
+          </div>
+
+          <div class="list-item waitlist-item" style="cursor:default; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="waitlist-text" style="font-size:13px; font-weight:700;">2. Luis P. (Control de Nevus)</div>
+              <div style="font-size:10px; color:#9ca3af;">Prioridad IA: Normal</div>
+            </div>
+            <div style="display:flex; gap:4px;">
+              <button class="glass-btn btn-move-up" style="width:auto; padding:6px 10px; margin-bottom:0; font-size:11px;" onclick="moveItemUp(this)">Subir ↑</button>
+              <button class="glass-btn btn-move-down" style="width:auto; padding:6px 10px; margin-bottom:0; font-size:11px;" onclick="moveItemDown(this)">Bajar ↓</button>
+            </div>
+          </div>
+
+          <div class="list-item waitlist-item" style="cursor:default; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="waitlist-text" style="font-size:13px; font-weight:700;">3. Mario G. (Acné Quístico)</div>
+              <div style="font-size:10px; color:#9ca3af;">Prioridad IA: Media</div>
+            </div>
+            <div style="display:flex; gap:4px;">
+              <button class="glass-btn btn-move-up" style="width:auto; padding:6px 10px; margin-bottom:0; font-size:11px;" onclick="moveItemUp(this)">Subir ↑</button>
+              <button class="glass-btn btn-move-down" style="width:auto; padding:6px 10px; margin-bottom:0; font-size:11px;" onclick="moveItemDown(this)">Bajar ↓</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="glass-btn btn-primary" style="margin-top:14px;" onclick="alert('¡Lista de espera guardada y validada legalmente!'); goBack();">
+          💾 Confirmar y Guardar Orden
+        </button>
+      </div>
+    </div>
+
+    <!-- 8. DASHBOARD DERMATÓLOGO -->
+    <div id="screen-dermatologo" class="screen">
+      <div class="app-header">
+        <div class="header-user-info">
+          <div class="header-avatar" style="background:rgba(168,85,247,0.3);">DS</div>
+          <div>
+            <div style="font-weight: 800; font-size: 14px;">Dra. Sánchez</div>
+            <div style="font-size: 10px; color: #a855f7;">Dermatología</div>
+          </div>
+        </div>
+        <button class="logout-icon-btn" onclick="resetAndLogout()" title="Cerrar Sesión">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+
+      <div class="glass-card" style="margin-bottom:80px;">
+        <div class="section-title">
+          <svg class="svg-icon icon-glow" style="color:#2dd4bf" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><path d="M10 8v8l6-4-6-4z"/></svg>
+          Citas y Pacientes Asignados
+        </div>
+        
+        <div class="list-item list-item-clickable" style="flex-direction:column; align-items:flex-start;" onclick="openDoctorFile('Lucía M.', '#TD-2048', 'Dermatitis Atópica en Antebrazo', '85% Mejora', 'Corticoides Tópicos cada 12h durante 7 días.')">
+          <div style="display:flex; justify-content:space-between; width:100%;">
+            <span style="font-weight:800; font-size:14px;">Lucía M. <span class="badge badge-info">Seguimiento</span></span>
+            <span class="badge badge-normal">Telecita 10:30</span>
+          </div>
+          <div style="font-size:12px; color:#9ca3af; margin-top:4px;">IA: Dermatitis Atópica · Evolución de Tratamiento:</div>
+          
+          <div class="graph-container">
+            <svg class="graph-svg" viewBox="0 0 100 35">
+              <polyline class="graph-line" points="5,30 30,22 55,18 80,10 95,4"></polyline>
+              <circle class="graph-point" cx="5" cy="30" r="2.5"></circle>
+              <circle class="graph-point" cx="30" cy="22" r="2.5"></circle>
+              <circle class="graph-point" cx="55" cy="18" r="2.5"></circle>
+              <circle class="graph-point" cx="80" cy="10" r="2.5"></circle>
+              <circle class="graph-point" cx="95" cy="4" r="2.5"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <div class="list-item list-item-clickable" style="flex-direction:column; align-items:flex-start; margin-top:10px;" onclick="openDoctorFile('Marcos T.', '#TD-8812', 'Carcinoma Basocelular', 'Gravedad 9.2/10', 'Cirugía de Mohs urgente. Crema de Imiquimod 5% previo a intervención.')">
+          <div style="display:flex; justify-content:space-between; width:100%;">
+            <span style="font-weight:800; font-size:14px;">Marcos T. <span class="badge badge-info">Caso Nuevo</span></span>
+            <span class="badge badge-urgent">Prioridad Alta</span>
+          </div>
+          <div style="font-size:12px; color:#9ca3af; margin-top:4px;">
+            <strong>Enfermedad probable (IA):</strong> Carcinoma Basocelular<br>
+            <span style="color:#f87171; font-weight:700;">Puntuación de Gravedad Inicial: 9.2 / 10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. EXPEDIENTE MÉDICO CON REDACCIÓN EDITABLE DE RECETAS -->
+    <div id="screen-medico-expediente" class="screen">
+      <div class="app-header">
+        <button class="back-btn" onclick="goBack()">
+          <svg class="svg-icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </button>
+        <div style="font-weight: 800; font-size:15px;">Expediente Clínico Médico</div>
+        <div style="width:24px;"></div>
+      </div>
+
+      <div class="glass-card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div>
+            <h2 id="doc-nombre" style="font-size:20px; font-weight:800;">Lucía M.</h2>
+            <p id="doc-hc" style="font-size:11px; color:#9ca3af;">#TD-2048 · Fitzpatrick Fototipo III</p>
+          </div>
+          <span class="badge badge-normal">Caso Validable</span>
+        </div>
+
+        <div style="margin:16px 0; padding:12px; background:rgba(255,255,255,0.04); border-radius:16px; border:1px solid rgba(255,255,255,0.1);">
+          <div style="font-size:11px; color:#9ca3af;">Diagnóstico Sugerido por IA</div>
+          <div id="doc-enfermedad" style="font-size:16px; font-weight:800; color:#2dd4bf; margin-top:2px;">Dermatitis Atópica en Antebrazo</div>
+          <div id="doc-estado" style="font-size:12px; color:#e5e7eb; margin-top:4px;">Estado: <strong>85% de mejora</strong></div>
+        </div>
+
+        <div class="section-title">Imágenes de Triaje / Evolución</div>
+        <div class="photo-grid">
+          <div class="svg-lesion-card">
+            <svg width="100%" height="100%" viewBox="0 0 120 70">
+              <rect width="120" height="70" fill="#dfb190"/>
+              <ellipse cx="60" cy="35" rx="25" ry="15" fill="#c25959" opacity="0.75" filter="blur(2px)"/>
+            </svg>
+            <span class="lesion-tag">INICIAL</span>
+          </div>
+          <div class="svg-lesion-card">
+            <svg width="100%" height="100%" viewBox="0 0 120 70">
+              <rect width="120" height="70" fill="#dfb190"/>
+              <ellipse cx="60" cy="35" rx="10" ry="6" fill="#c25959" opacity="0.3"/>
+            </svg>
+            <span class="lesion-tag">ACTUAL</span>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:14px;">Redacción de Receta Médica</div>
+        <textarea id="doc-receta-input" class="glass-textarea" rows="3" placeholder="Escribe la prescripción, posología y duración..."></textarea>
+
+        <button class="glass-btn btn-primary" style="margin-top:10px;" onclick="guardarReceta()">
+          ✍️ Guardar y Emitir Receta
+        </button>
+      </div>
+    </div>
+
+    <!-- DOCKS INFERIORES FLOTANTES PERSISTENTES POR PERFIL (NUEVO REQUERIMIENTO 3) -->
+    <div id="dock-paciente" class="dock-nav">
+      <div class="nav-item active" id="nav-pac-inicio" onclick="showScreen('screen-paciente')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span>Inicio</span>
+      </div>
+      <div class="nav-item" id="nav-pac-cita" onclick="showScreen('screen-pedir-cita')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <span>Pedir Cita</span>
+      </div>
+      <div class="nav-item" id="nav-pac-citas" onclick="showScreen('screen-modificar-citas')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Mis Citas</span>
+      </div>
+    </div>
+
+    <div id="dock-cabecera" class="dock-nav">
+      <div class="nav-item active" id="nav-cab-casos" onclick="showScreen('screen-cabecera')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>Casos Nuevos</span>
+      </div>
+      <div class="nav-item" id="nav-cab-lista" onclick="showScreen('screen-cabecera-lista-espera')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/></svg>
+        <span>Lista de Espera</span>
+      </div>
+    </div>
+
+    <div id="dock-dermatologo" class="dock-nav">
+      <div class="nav-item active">
+        <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><path d="M10 8v8l6-4-6-4z"/></svg>
+        <span>Citas Pendientes</span>
+      </div>
+      <div class="nav-item" onclick="alert('Abriendo registro de evolución...')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <span>Evolución</span>
+      </div>
+    </div>
+
+    <!-- MODAL PARA REAGENDAR -->
+    <div id="modal-reagendar" class="modal-overlay hidden">
+      <div class="glass-card" style="width:100%; margin-bottom:0;">
+        <h3 style="font-size:16px; font-weight:800; margin-bottom:12px;">Selecciona Nueva Fecha</h3>
+        <input type="date" class="glass-input" value="2026-10-20">
+        <select class="glass-select">
+          <option>09:30 AM</option>
+          <option>11:00 AM</option>
+          <option>16:15 PM</option>
+        </select>
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button class="glass-btn btn-primary" style="margin-bottom:0;" onclick="confirmarReagendar()">Guardar</button>
+          <button class="glass-btn" style="margin-bottom:0;" onclick="closeReagendarModal()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let screenHistory = [];
+    let currentRole = null;
+
+    function showScreen(screenId, isBack = false) {
+      const currentActive = document.querySelector('.screen.active');
+      if (currentActive && !isBack) {
+        screenHistory.push(currentActive.id);
+      }
+      document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+
+      // ASIGNACIÓN Y GESTIÓN DE DOCKS PERSISTENTES SEGÚN ROL
+      if (['screen-paciente', 'screen-paciente-caso-detalle', 'screen-pedir-cita', 'screen-modificar-citas'].includes(screenId)) {
+        currentRole = 'paciente';
+      } else if (['screen-cabecera', 'screen-cabecera-lista-espera'].includes(screenId)) {
+        currentRole = 'cabecera';
+      } else if (['screen-dermatologo', 'screen-medico-expediente'].includes(screenId)) {
+        currentRole = 'dermatologo';
+      } else if (['screen-login', 'screen-doctor-type'].includes(screenId)) {
+        currentRole = null;
+      }
+
+      updateDocks(screenId);
+
+      if (screenId === 'screen-cabecera-lista-espera') {
+        updateWaitlistUI();
+      }
+    }
+
+    function updateDocks(activeScreenId) {
+      document.querySelectorAll('.dock-nav').forEach(dock => dock.classList.remove('visible'));
+
+      if (currentRole === 'paciente') {
+        const dock = document.getElementById('dock-paciente');
+        dock.classList.add('visible');
+        dock.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        if (activeScreenId === 'screen-paciente') document.getElementById('nav-pac-inicio').classList.add('active');
+        if (activeScreenId === 'screen-pedir-cita') document.getElementById('nav-pac-cita').classList.add('active');
+        if (activeScreenId === 'screen-modificar-citas') document.getElementById('nav-pac-citas').classList.add('active');
+      } else if (currentRole === 'cabecera') {
+        const dock = document.getElementById('dock-cabecera');
+        dock.classList.add('visible');
+        dock.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        if (activeScreenId === 'screen-cabecera') document.getElementById('nav-cab-casos').classList.add('active');
+        if (activeScreenId === 'screen-cabecera-lista-espera') document.getElementById('nav-cab-lista').classList.add('active');
+      } else if (currentRole === 'dermatologo') {
+        document.getElementById('dock-dermatologo').classList.add('visible');
+      }
+    }
+
+    function goBack() {
+      if (screenHistory.length > 0) {
+        const previousScreen = screenHistory.pop();
+        showScreen(previousScreen, true);
+      } else {
+        showScreen('screen-login', true);
+      }
+    }
+
+    function resetAndLogout() {
+      screenHistory = [];
+      currentRole = null;
+      showScreen('screen-login', true);
+    }
+
+    // CORRECCIÓN TOTAL DE REORDENAMIENTO
+    function moveItemUp(btn) {
+      const item = btn.closest('.waitlist-item');
+      const previous = item.previousElementSibling;
+      if (previous && previous.classList.contains('waitlist-item')) {
+        item.parentNode.insertBefore(item, previous);
+        updateWaitlistUI();
+      }
+    }
+
+    function moveItemDown(btn) {
+      const item = btn.closest('.waitlist-item');
+      const next = item.nextElementSibling;
+      if (next && next.classList.contains('waitlist-item')) {
+        item.parentNode.insertBefore(next, item);
+        updateWaitlistUI();
+      }
+    }
+
+    function updateWaitlistUI() {
+      const items = document.querySelectorAll('.waitlist-item');
+      items.forEach((item, index) => {
+        const textDiv = item.querySelector('.waitlist-text');
+        const rawName = textDiv.innerText.replace(/^\d+\.\s*/, '');
+        textDiv.innerText = (index + 1) + '. ' + rawName;
+
+        const btnUp = item.querySelector('.btn-move-up');
+        const btnDown = item.querySelector('.btn-move-down');
+
+        if (btnUp) btnUp.style.opacity = index === 0 ? '0.3' : '1';
+        if (btnDown) btnDown.style.opacity = index === items.length - 1 ? '0.3' : '1';
+      });
+    }
+
+    function selectCitaOption(type) {
+      const btnActivo = document.getElementById('btn-tipo-activo');
+      const btnNuevo = document.getElementById('btn-tipo-nuevo');
+      const secActivo = document.getElementById('section-caso-activo');
+      const secNuevo = document.getElementById('section-caso-nuevo');
+
+      if (type === 'activo') {
+        btnActivo.classList.add('selected'); btnNuevo.classList.remove('selected');
+        secActivo.classList.remove('hidden'); secNuevo.classList.add('hidden');
+      } else {
+        btnNuevo.classList.add('selected'); btnActivo.classList.remove('selected');
+        secNuevo.classList.remove('hidden'); secActivo.classList.add('hidden');
+      }
+    }
+
+    function openPatientCaseDetail(title, id, status, receta) {
+      document.getElementById('pat-case-title').innerText = title;
+      document.getElementById('pat-case-id').innerText = id;
+      document.getElementById('pat-case-status').innerText = 'Evaluación de IA: ' + status;
+      document.getElementById('pat-case-receta').innerText = receta;
+      showScreen('screen-paciente-caso-detalle');
+    }
+
+    function openDoctorFile(nombre, hc, enfermedad, estado, receta) {
+      document.getElementById('doc-nombre').innerText = nombre;
+      document.getElementById('doc-hc').innerText = hc + ' · Fitzpatrick Fototipo III';
+      document.getElementById('doc-enfermedad').innerText = enfermedad;
+      document.getElementById('doc-estado').innerHTML = 'Estado: <strong>' + estado + '</strong>';
+      document.getElementById('doc-receta-input').value = receta;
+      showScreen('screen-medico-expediente');
+    }
+
+    function guardarReceta() {
+      const val = document.getElementById('doc-receta-input').value;
+      if (val.trim() === '') {
+        alert('Por favor escribe la prescripción antes de emitirla.');
+        return;
+      }
+      alert('Receta firmada electrónicamente y emitida al expediente del paciente: "' + val + '"');
+      goBack();
+    }
+
+    function openReagendarModal() { document.getElementById('modal-reagendar').classList.remove('hidden'); }
+    function closeReagendarModal() { document.getElementById('modal-reagendar').classList.add('hidden'); }
+    function confirmarReagendar() {
+      alert('¡Cita reagendada con éxito!');
+      closeReagendarModal();
+    }
+
+    function cancelarCita(cardId) {
+      if (confirm('¿Estás seguro de que deseas cancelar esta cita?')) {
+        document.getElementById(cardId).style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
