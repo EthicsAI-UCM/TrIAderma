@@ -28,19 +28,14 @@ para poder informar al especialista sobre el porcentaje de error.
 
 ## 3. Historial corrupto o falsificado
 ### Problema
-También se puede dar el caso en el que el usuario proporciona un historial médico con errores (por las
-razones que fueran), o directamente falsificado. Ante esto, el modelo (por razones obvias) no sería
-capaz de deducir correctamente la situación del paciente.
+El historial médico le faltan enfermedades o partes por fallo en la base de datos
 
 ### Solución
-
+Al ser una red recurrente al final, simplemente se puede hacer que no se tengan en cuenta, ya que no necesita ni un mínimo ni un máximo de datos
 
 ## 4. Analíticas corruptas o falsificadas
 ### Problema
-Al igual que con el historial médico, un paciente puede enviar datos erróneos o falsificados de unas
-analíticas, por ejemplo para hacer creer al especialista que no hay ningún problema (o viceversa,
-como hace la gente para obtener medicamentos innecesarios). Ante esto, nuestro modelo tampoco sería
-de ayuda.
+Las analíticas pueden salir mal, perfectamente por ejemplo si te tomas un zumo el azúcar se dispara.
 
 ### Solución
 Aqui, nuestro modelo podría tener un paso de verificación. A diferencia del historial, las analíticas
