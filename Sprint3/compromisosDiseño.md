@@ -42,7 +42,3 @@ Por tanto podemos decir que debemos tener varios compromisos que cuimplir:
 
 
 ---
-
-### Resumen del Flujo de Garantía de Equidad
-
-$$\text{Curación de Datos Diversos (EHDS/IIS)} \longrightarrow \text{Auditoría de Sesgo por Subgrupo} \longrightarrow \text{Interfaz Accesible y Modo Guiado} \longrightarrow \text{Respaldo Sanitario Presencial}$$
