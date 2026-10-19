@@ -29,9 +29,24 @@ Obviamente hay patologías, como algunas de las uñas o casos como la piel de ma
 
 No son necesarios estudios para saber que una app móvil le dificulta las cosas al colectivo anciano al no estar acostumbrados a las nuevas tecnologías. Esto se puede arreglar con las soluciones que dimos el anterior sprint de adaptabilidad al usuario, pero muchos ancianos pueden llegar a sentirse desprivilegiados usando la app. Dado este sesgo, mantenemos la decisión con más razon de permitir que la app la usen también en citas presenciales para que los ancianos puedan usar las vías tradicionales.
 
+## Caso infantil
+
+Los menores no pueden pedir citas por si solos, en pocas palabras hay que permitir que un adulto pueda validarse como tutor legal del menor y usar su cuenta por él. esto se puede hacer ligando directamente la cuenta del adulto para que el menor no pueda usar la app médica solo.
+
 ## Colectivos afectados y efectos de usos problemáticos
 
 Con esto podemos diferenciar claramente a 3 colectivos afectados, las étnias minoritarias, las mujeres y las personas que no estan en edad adulta.
+
+Ejemplos de uso prblemáticos:
+
+- Si se entrena un modelo de ml con pieles claras solo, cualquier piel oscura se va a detectar como una patología, esto ya no solo es un problema de mal diagnóstico sino que la persona de piel oscura puede llegar a sentir que no se le ha tenido en cuenta. Más aún, en el caso más extremos de que el dataset solo fuese de pieles claras podría darse el caso de que considerase que ser de piel oscura es una enfermedad.
+
+- Como hemos nombrado, si un anciano usa una app sin guía, probablemente no pueda entender nada.
+
+- Las mujeres presentan enfermedades como melanomas o lesiones de piel más frecuentemente en piernas y menos en el torso, al contrario que los hombres, además de tener cualidades físicas distintas. si el modelo no está entrenado puede ocurrir que una lesión se subestime o sobreestime.
+
+Cabe destacar que afortunadamente los fallos de los modelos de ml tienden a sobrestimar lesiones si tienen que predecir algo y no fallan, esto implica que en nuestra app indirectamente puede beneficiarles si fuese el caso, pero no podemos asegurar el comportamiento interno que tiene un modelo sin haberlo entrenado. Por el consecuente, vamos a estimar que los fallos del modelo afectaran negativamente a los colectivos sesgados.
+
 
 ## ¿Cómo solucionamos esto?
 
