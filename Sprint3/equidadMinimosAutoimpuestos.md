@@ -6,7 +6,7 @@ Por el artículo 10 del AI Act, los modelos deben someterse a pruebas específic
 
 Estas son algunas métricas de equidad que se definen en el informe ISO, pero no son las únicas que debería cumplir el modelo:
 
-- Demographic Parity: Mide que la probabilidad de que el modelo prediga cierta patología no cambia si está condicionada a que se predice para pacientes de una u otra condición (en nuestro caso pieles oscuras/claras o de personas jóvenes/ancianas). No tiene en cuenta la etiqueta real.$P(\hat{Y}=1∣A=a)=P(\hat{Y}=1∣A=b)∀a,b$
+- Demographic Parity: Mide que la probabilidad de que el modelo prediga cierta patología no cambia si está condicionada a que se predice para pacientes de una u otra condición (en nuestro caso pieles oscuras/claras o de personas jóvenes/ancianas). No tiene en cuenta la etiqueta real. $P(\hat{Y}=1∣A=a)=P(\hat{Y}=1∣A=b)∀a,b$
 
 - Equalized Odds: En este caso, se mide que la tase de verdaderos positivos y la de falsos positivos sea igual para todos los grupos.
   
