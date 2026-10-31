@@ -32,23 +32,15 @@ El EHDS (Reglamento UE 2025/327, en vigor desde marzo de 2025) habilita el uso s
 
 Como mencionamos en lso sprints 2 y 3, hay dos fuentes principales, la ehds y los datos de un hospital propios. En verdad hay un tercer caso, que es buscar um socio como shaip que nos proporcione los datos, estos últimos tienen muchas condiciones como se verá después, pero es conveniente tenerlos en cuenta en una comparación.
 
+
+
 | Fuente de Datos | Instrumento Legal / Licencia | Condiciones de Uso | Restricciones Principales |
-| --- | --- | --- | --- |
-| **Espacio Europeo de Datos Sanitarios (EHDS)** | Permiso de Datos (emitido por un Organismo de Acceso - HDAB) | El proyecto debe calificar como "uso secundario" (investigación, innovación, entrenamiento de IA médica). | **Cero descargas:** Los datos solo pueden procesarse dentro de un Entorno de Procesamiento Seguro (SPE).<br>
+| :---- | :---- | :---- | :---- |
+| **Espacio Europeo de Datos Sanitarios (EHDS)** | Permiso de Datos (emitido por un Organismo de Acceso \- HDAB) | El proyecto debe calificar como "uso secundario" (investigación, innovación, entrenamiento de IA médica). | **Cero descargas:** Los datos solo pueden procesarse dentro de un Entorno de Procesamiento Seguro (SPE). **Prohibición penal:** Ilegal intentar reidentificar pacientes o usar datos para seguros/marketing. |
+| **Colaboraciones Directas (Hospitales)** | Acuerdos de Transferencia (DTA) y Procesamiento (DPA) | Requiere aprobación previa del protocolo por el **Comité de Ética (CEIm)** del hospital y un contrato bilateral a medida. | **Uso finalista:** Limitado exclusivamente al proyecto exacto definido en el contrato. **Ciclo de vida:** Obligación estricta de destruir o devolver las imágenes al finalizar el estudio. La propiedad intelectual del algoritmo suele compartirse. |
+| **Socios Terceros / Proveedores (ej. Shaip)** | Licencia de Datos Comerciales (Contrato B2B) | Transacción comercial con pago de tarifas. Requiere garantías de indemnidad sobre el consentimiento informado y anonimización previa. | **Uso interno:** Licencia no exclusiva para entrenar modelos. **Prohibición de reventa:** Estrictamente prohibido distribuir, sublicenciar, publicar de código abierto o revender el conjunto de datos crudos (las imágenes en sí). |
 
-<br>
 
-<br>**Prohibición penal:** Ilegal intentar reidentificar pacientes o usar datos para seguros/marketing. |
-| **Colaboraciones Directas (Hospitales)** | Acuerdos de Transferencia (DTA) y Procesamiento (DPA) | Requiere aprobación previa del protocolo por el **Comité de Ética (CEIm)** del hospital y un contrato bilateral a medida. | **Uso finalista:** Limitado exclusivamente al proyecto exacto definido en el contrato.<br>
-
-<br>
-
-<br>**Ciclo de vida:** Obligación estricta de destruir o devolver las imágenes al finalizar el estudio. La propiedad intelectual del algoritmo suele compartirse. |
-| **Socios Terceros / Proveedores (ej. Shaip)** | Licencia de Datos Comerciales (Contrato B2B) | Transacción comercial con pago de tarifas. Requiere garantías de indemnidad sobre el consentimiento informado y anonimización previa. | **Uso interno:** Licencia no exclusiva para entrenar modelos.<br>
-
-<br>
-
-<br>**Prohibición de reventa:** Estrictamente prohibido distribuir, sublicenciar, publicar de código abierto o revender el conjunto de datos crudos (las imágenes en sí). |
 
 ### Conclusiones
 
