@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="Sprint4/logo.svg" alt="Logo TrIAderma" height="130" align="absmiddle">
+  <img src="logo.svg" alt="Logo TrIAderma" height="130" align="absmiddle">
   <big><big>TrIAderma</big></big>
 </h1>
 
