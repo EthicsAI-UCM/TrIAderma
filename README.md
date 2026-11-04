@@ -1,6 +1,15 @@
-# TrIAderma
+<h1 align="center">
+  <img src="Sprint4/logo.svg" alt="Logo TrIAderma" height="130" align="absmiddle">
+  <big><big>TrIAderma</big></big>
+</h1>
 
-> *"Facilitar el triaje de los pacientes de dermatología con clasificaciones de gravedad y seguimientos potenciados con IA."*
+<p align="center">
+  <em>"Facilitar el triaje de los pacientes de dermatología con clasificaciones de gravedad y seguimientos potenciados con IA."</em>
+</p>
+
+---
+
+TrIAderma es un proyecto orientado al triaje telemático de los pacientes en el ámbito de la dermatología, con el fin de aliviar la saturación que existe actualmente.
 
 TrIAderma es un proyecto orientado al triaje telemático de los pacientes en el ámbito de la dermatología, con el fin de aliviar la saturación que existe actualmente.
 
