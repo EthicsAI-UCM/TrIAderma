@@ -71,42 +71,39 @@ Nuevos esquemas creados para controlar la responsabilidad de la IA, evitar el us
 ---
 ## Licencias a ponderar en TrIAderma
 
-Considerando que buscamos un marco abierto, colaborativo y con exención de responsabilidad médica explícita, se evalúan las siguientes opciones:
+Considerando que buscamos un marco abierto, colaborativo y con una exención de responsabilidad médica absoluta, se evalúan las siguientes opciones:
 
 1. **Apache 2.0 (Licencia Permisiva Estándar):**
-* **Ventajas:** Total compatibilidad nativa con SAM 2 (misma licencia). Es el estándar de la industria, incluye cláusula explícita de concesión y protección contra patentes y contiene la exención clásica de garantía y responsabilidad (*"AS IS" / Sin garantías*).
-
-
-* **Inconvenientes:** La exención de responsabilidad es genérica de software, no contiene cláusulas específicas sobre el uso clínico o la supervisión médica obligatoria de los diagnósticos.
+* **Ventajas:** Total compatibilidad nativa con SAM 2 (misma licencia). Es el estándar de la industria, incluye cláusula explícita de concesión y protección contra patentes. Además, cuenta con una de las cláusulas de limitación de responsabilidad ("AS IS" / Sin garantías) más robustas y probadas judicialmente del mercado.
+* **Inconvenientes:** Como cualquier licencia de software estándar, su exención de responsabilidad es genérica y no menciona específicamente el ámbito clínico (lo cual debe solucionarse con un aviso legal externo a la licencia).
 
 
 2. **OpenRAIL-M (Responsible AI License - Medical Focus):**
-* **Ventajas:** Es una licencia específicamente diseñada para modelos de Inteligencia Artificial. Permite que el código y los pesos sean abiertos para investigación y auditoría, pero añade un apéndice de **Uso Aceptable (Use Restrictions)**. Prohíbe explícitamente el uso de TrIAderma como un sistema de diagnóstico autónomo sin supervisión de un profesional sanitario cualificado, protegiendo legalmente a los desarrolladores ante la sobreconfianza o mal uso del facultativo.
+* **Ventajas:** Diseñada específicamente para IA, prohíbe explícitamente usos poco éticos o el diagnóstico autónomo sin supervisión médica.
+* **Inconvenientes:** **Es un riesgo legal encubierto.** Al intentar regular el comportamiento del usuario final, los desarrolladores asumen una carga de vigilancia implícita. Además, no es reconocida como una licencia "Open Source" por la OSI, lo que bloquea su adopción en ecosistemas de investigación puros.
 
 
-* **Inconvenientes:** Al no estar aprobada formalmente por la OSI (*Open Source Initiative*) debido a sus restricciones de uso conductual, técnicamente se considera una licencia "Source-Available / Ética" más que Open Source puro.
-
-
-3. **MIT con Addendum de Exención Médica:**
-* **Ventajas:** Máxima simplicidad y adopción.
-
-
-* **Inconvenientes:** Carece de protección explícita frente a patentes y su exoneración de responsabilidad legal ante negligencias clínicas es demasiado vaga.
+3. **EUPL v1.2 (European Union Public Licence):**
+* **Ventajas:** Traducida y adaptada al marco jurídico europeo. Ideal si el proyecto recibe fondos de la UE o se enmarca fuertemente en el EHDS.
+* **Inconvenientes:** Es Copyleft (vírica en SaaS). Esto obligaría a cualquier hospital que despliegue TrIAderma en sus servidores web a publicar sus posibles modificaciones, lo que puede causar rechazo en instituciones sanitarias privadas con estrictas políticas de TI.
 
 
 
 ## Decisión final
 
-Para **TrIAderma**, la opción elegida es la licencia **OpenRAIL-M (CreativeML OpenRAIL-M)** para los pesos del modelo de IA y **Apache 2.0** para el código base de la aplicación web/backend:
+Para **TrIAderma**, la opción elegida es la licencia **Apache 2.0 tanto para el código base como para los pesos (checkpoints) del modelo**, complementada con un **Aviso Médico de Exención de Responsabilidad (Medical Disclaimer)**.
 
-1. **Protección clínica y responsabilidad:** La adopción de **OpenRAIL-M** cubre nuestra necesidad primordial de exención de responsabilidad médica. Deja jurídicamente establecido que TrIAderma es una herramienta de soporte a la decisión clínica (CDSS) y exige que cualquier despliegue derivado cuente con la validación obligatoria de un dermatólogo colegiado.
+Esta estrategia híbrida separa la propiedad intelectual de la responsabilidad civil:
+
+1. **Compatibilidad y Estandarización (Apache 2.0):** Garantiza compatibilidad absoluta con SAM 2 y respeta los principios de anonimización y uso secundario del **EHDS** y los **datos hospitalarios**. Permite a la comunidad médica y científica auditar, mejorar e integrar el modelo sin fricciones legales. Su robusta cláusula "AS IS" nos protege a nivel de desarrollo de software.
+2. **Protección Clínica Específica (Medical Disclaimer + Términos de Uso):** En lugar de usar una licencia "ética" dudosa, la responsabilidad médica se delega legalmente forzando la aceptación de un Aviso Médico antes de usar la herramienta. Este descargo (que debe constar en el `README` y en la interfaz de usuario) estipulará explícitamente que:
+* *TrIAderma es exclusivamente un Sistema de Soporte a la Decisión Clínica (CDSS) para fines de investigación y triaje.*
+* *Bajo ninguna circunstancia sustituye el juicio clínico de un profesional sanitario colegiado.*
+* *Los desarrolladores del software y proveedores del modelo quedan eximidos de cualquier responsabilidad por negligencia, diagnósticos erróneos o mala praxis médica derivada de la sobreconfianza (*automation bias*) en la herramienta.*
 
 
-2. **Compatibilidad total:** Respeta al 100% los términos de **Apache 2.0** heredados de SAM 2 y no colisiona con las normativas de cesión de datos ni del **EHDS** ni de las **colaboraciones hospitalarias**.
 
-
-3. **Apertura científica:** Permite que la comunidad médica e investigadora revise, audite y mejore la precisión del algoritmo de segmentación sin comprometer la seguridad de los pacientes ni exponer a los creadores a litigios por mala praxis médica.
-
+De este modo, obtenemos lo mejor de ambos mundos: un producto 100% Open Source y una barrera legal sólida frente a un posible uso clínico irresponsable.
 
 
 ## Bibliografía
