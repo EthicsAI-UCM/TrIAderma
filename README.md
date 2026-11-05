@@ -25,3 +25,22 @@ TrIAderma es un proyecto orientado al triaje telemático de los pacientes en el 
 TrIAderma está concebido bajo el marco normativo de los sistemas de IA de alto riesgo en sanidad (*EU AI Act*), garantizando la transparencia algorítmica, la explicabilidad visual de los resultados y la supervisión médica constante en todo el proceso asistencial.
 
 > *"En este repositorio se podrá observar la evolución del proyecto y cómo abordamos distintas cuestiones legales y éticas del mismo."*
+> *"TrIAderma es un proyecto universitario teórico, este repositorio no tiene ninguna implementación y no sirve para ejercer el problema planteado."*
+
+## Licencia
+
+Todo el código fuente y los pesos (*checkpoints*) del modelo de **TrIAderma** se distribuyen bajo la licencia **Apache License 2.0**. 
+
+Puedes utilizar, modificar y distribuir este software de forma libre, ya sea para fines de investigación o comerciales, siempre y cuando se incluya una copia de la licencia original y se respeten sus términos. Consulta el archivo `LICENSE` para más detalles.
+
+---
+
+## Aviso Médico y Descargo de Responsabilidad (Medical Disclaimer)
+**TrIAderma es exclusivamente una herramienta de investigación y un Sistema de Soporte a la Decisión Clínica (CDSS).** 
+
+Al utilizar este repositorio, código o modelo, aceptas explícitamente los siguientes términos:
+
+1. **Uso no diagnóstico:** Este software no es un dispositivo médico certificado (MDR) y **no está diseñado para diagnosticar, curar, mitigar, tratar o prevenir ninguna enfermedad**. Los resultados de segmentación y análisis generados por la IA son meramente informativos.
+2. **Supervisión obligatoria:** TrIAderma no sustituye, bajo ninguna circunstancia, el juicio clínico independiente de un profesional sanitario cualificado. Cualquier decisión clínica o tratamiento derivado del uso de esta herramienta debe ser validado y asumido por un médico colegiado.
+3. **Ausencia de relación médico-paciente:** El uso de este software no establece ninguna relación médico-paciente entre los desarrolladores del proyecto y los usuarios finales o pacientes.
+4. **Exención de responsabilidad ("AS IS"):** El software se proporciona "TAL CUAL", sin garantías de ningún tipo, expresas o implícitas, incluyendo, pero no limitándose a, la idoneidad para un propósito particular o la exactitud clínica. Los creadores y colaboradores de TrIAderma no asumen **ninguna responsabilidad legal o civil** por diagnósticos erróneos, negligencias, daños directos o indirectos, o mala praxis médica que pudiera derivarse del uso, sobreconfianza (*automation bias*) o mal uso de esta herramienta.
