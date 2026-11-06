@@ -11,8 +11,6 @@
 
 TrIAderma es un proyecto orientado al triaje telemático de los pacientes en el ámbito de la dermatología, con el fin de aliviar la saturación que existe actualmente.
 
-TrIAderma es un proyecto orientado al triaje telemático de los pacientes en el ámbito de la dermatología, con el fin de aliviar la saturación que existe actualmente.
-
 ## Características Principales
 
 * **Evaluación Visual Asistida:** Utiliza modelos de segmentación y detección de última generación para analizar el tamaño, color, profundidad y morfología de las lesiones cutáneas.
