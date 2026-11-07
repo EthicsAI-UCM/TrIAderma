@@ -4,7 +4,7 @@ Para entender los posibles modelos de negocio de TrIAderma, es preciso recordar 
 
 ## Modelo de negocio Compliance-as-a-Service
 
-Nuestro modelo de negocio se basaría en cumplir con el **Mercado CE bajo el Reglamento de Productos Sanitarios** (MDR - EU 2017/745). Este sello regulatorio no se otorga al código fuente, sino al Fabricante Legal para una versión controlada de ese código que se clasifica como _Software as a Medical Device (SaMD)_.
+Nuestro modelo de negocio se basaría en cumplir con el **Marcado CE bajo el Reglamento de Productos Sanitarios** (MDR - EU 2017/745). Este sello regulatorio no se otorga al código fuente, sino al Fabricante Legal para una versión controlada de ese código que se clasifica como _Software as a Medical Device (SaMD)_.
 
 
 
@@ -16,7 +16,7 @@ En cuanto a cómo se distribuiría el modelo en el marco del Sistema de Salud P�
 
 ## Barreras de entrada para la competencia
 
-- Para obtener el mercado CE bajo MDR, se exige cumplir con un **Informe de Evaluación Clínica**. Esto requiere demostrar la eficacia del modelo con ensayos clínicos o *datasets* retrospectivos altamente curados. Dichos expedientes de validación deben **mantenerse privativos** para evitar que otras empresas los aprovechen para obtener el mismo sello regulatorio con nuestro modelo.
+- Para obtener el Marcado CE bajo MDR, se exige cumplir con un **Informe de Evaluación Clínica**. Esto requiere demostrar la eficacia del modelo con ensayos clínicos o *datasets* retrospectivos altamente curados. Dichos expedientes de validación deben **mantenerse privativos** para evitar que otras empresas los aprovechen para obtener el mismo sello regulatorio con nuestro modelo.
 
 - Una vez que hayamos implantado nuestra solución en el Sistema Nacional de Salud, podríamos incluir cláusulas para la recolección anónima de datos, los cuales como mencionamos en varias ocasiones no se compartirán con terceros, lo que nos permitiría actualizar nuestro sistema, que debe pasar desde cero el proceso de auditoría regulatoria MDR. Esto facilitará que la competencia se quede desfasada.
 
