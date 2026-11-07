@@ -6,7 +6,7 @@ Para entender los posibles modelos de negocio de TrIAderma, es preciso recordar 
 
 Nuestro modelo de negocio se basaría en cumplir con el **Marcado CE bajo el Reglamento de Productos Sanitarios** (MDR - EU 2017/745). Este sello regulatorio no se otorga al código fuente, sino al Fabricante Legal para una versión controlada de ese código que se clasifica como _Software as a Medical Device (SaMD)_.
 
-
+A nivel de validación y transparencia, publicamos la metodología clínica, las arquitecturas, los resultados estadísticos (Sensibilidad, Especificidad, Curvas ROC) y las matrices de confusión derivadas de ensayos clínicos. Sin embargo, los datasets de entrenamiento altamente curados y el Dossier Técnico del Sistema de Calidad (ISO 13485) se mantienen estrictamente protegidos como secreto comercial (Trade Secret), compartiéndose únicamente, y bajo acuerdos de confidencialidad, con Autoridades Sanitarias y Organismos Notificados para auditoría.
 
 En cuanto a cómo se distribuiría el modelo en el marco del Sistema de Salud Pública Española, se contemplan dos opciones:
 
@@ -16,7 +16,7 @@ En cuanto a cómo se distribuiría el modelo en el marco del Sistema de Salud P�
 
 ## Barreras de entrada para la competencia
 
-- Para obtener el Marcado CE bajo MDR, se exige cumplir con un **Informe de Evaluación Clínica**. Esto requiere demostrar la eficacia del modelo con ensayos clínicos o *datasets* retrospectivos altamente curados. Dichos expedientes de validación deben **mantenerse privativos** para evitar que otras empresas los aprovechen para obtener el mismo sello regulatorio con nuestro modelo.
+- Para evitar que otras empresas se lucren con nuestro producto sin obtener nosotros retribución alguna, mantenemos privado el Dosier Técnico del Sistema de Calidad (ISO 13485) sin el cual es extremadamente difícil que otras empresas cumplan con el MDR usando nuestro mismo modelo.
 
 - Una vez que hayamos implantado nuestra solución en el Sistema Nacional de Salud, podríamos incluir cláusulas para la recolección anónima de datos, los cuales como mencionamos en varias ocasiones no se compartirán con terceros, lo que nos permitiría actualizar nuestro sistema, que debe pasar desde cero el proceso de auditoría regulatoria MDR. Esto facilitará que la competencia se quede desfasada.
 
