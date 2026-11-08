@@ -24,6 +24,7 @@ TrIAderma está concebido bajo el marco normativo de los sistemas de IA de alto 
 
 > *"En este repositorio se podrá observar la evolución del proyecto y cómo abordamos distintas cuestiones legales y éticas del mismo."*
 > *"TrIAderma es un proyecto universitario teórico, este repositorio no tiene ninguna implementación y no sirve para ejercer el problema planteado."*
+> *"Cualquier correo, número de telefono o dirección puede no ser real, solo mencionada para futura creación o uso."*
 
 ## Licencia
 
